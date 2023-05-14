@@ -134,10 +134,10 @@ void light() {
 
 	// ME: 2 = dots, 3 = dash
 	// ME: 0.4 bigger dots, 0.5 default
-	bool is_dot = ((int(FRAGCOORD.x * 0.5) + 3 * int(FRAGCOORD.y * 0.5) % 4 ) % 4 == 0); // Dither pattern
+	bool is_dot = ((int(FRAGCOORD.x * 0.5) + 2 * int(FRAGCOORD.y * 0.5) % 4 ) % 4 == 0); // Dither pattern
 	
 	// ME: changed >= to <= so dots only go to shadow
-	bool is_high_e = e >= 1.5;	// is the incoming light of high energy?? (used to differentiate multidir en directional lights)
+	bool is_high_e = e <= 1.5;	// is the incoming light of high energy?? (used to differentiate multidir en directional lights)
 
 	// ME: changed 0.1 to 0.5 (apparently increase shadow)
 	float s1 = float(v < 0.5);	// step 1

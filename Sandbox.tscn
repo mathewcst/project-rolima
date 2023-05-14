@@ -1,59 +1,29 @@
-[gd_scene load_steps=24 format=3 uid="uid://bfg5w5f0f5tti"]
+[gd_scene load_steps=17 format=3 uid="uid://bfg5w5f0f5tti"]
 
-[ext_resource type="Script" path="res://VehicleBody3D.gd" id="1_hjjij"]
-[ext_resource type="Script" path="res://Camera3D.gd" id="1_texlf"]
 [ext_resource type="Environment" uid="uid://cg6eea4tudysu" path="res://Environment.tres" id="1_vwniu"]
 [ext_resource type="Shader" path="res://Shaders/outline.gdshader" id="2_46eo6"]
-[ext_resource type="Material" uid="uid://nkb67a1iyphd" path="res://Materials/M_Base.tres" id="2_pv3l8"]
 [ext_resource type="Shader" path="res://Shaders/cel-shader-base.gdshader" id="3_0r784"]
 [ext_resource type="Shader" path="res://Shaders/outline_white.gdshader" id="3_pfaal"]
+[ext_resource type="PackedScene" uid="uid://cgxnyfb0ecwak" path="res://Entities/Player/Player.tscn" id="6_2d0rm"]
 [ext_resource type="Shader" path="res://Shaders/chromatic_aberration.gdshader" id="7_u5i2n"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_3vp2l"]
-material = ExtResource("2_pv3l8")
-size = Vector3(1.5, 0.2, 1.5)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_wjaso"]
-size = Vector3(1, 0.249105, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6m2dx"]
-render_priority = 0
-shader = ExtResource("3_pfaal")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ewyvt"]
-render_priority = 0
-next_pass = SubResource("ShaderMaterial_6m2dx")
-shader = ExtResource("3_0r784")
-shader_parameter/backlight = null
-shader_parameter/color = Color(0.188235, 0.2, 0.207843, 1)
-shader_parameter/specular = Color(0.3, 0.3, 0.3, 0.5)
-shader_parameter/fresnel = Color(0.2, 0.2, 0.2, 0.3)
-shader_parameter/uv_scale = Vector2(1, 1)
-shader_parameter/uv_offset = Vector2(0, 0)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_gdy0b"]
-material = SubResource("ShaderMaterial_ewyvt")
-top_radius = 0.25
-bottom_radius = 0.25
-height = 0.15
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1tfdu"]
 render_priority = 0
 shader = ExtResource("3_0r784")
 shader_parameter/backlight = Color(1, 1, 1, 1)
-shader_parameter/color = Color(0.52549, 0.380392, 0.172549, 1)
-shader_parameter/specular = Color(0.301961, 0.301961, 0.301961, 0)
-shader_parameter/fresnel = Color(0.2, 0.2, 0.2, 0)
+shader_parameter/color = Color(0.305882, 0.419608, 0.231373, 1)
+shader_parameter/specular = Color(0, 0, 0, 0)
+shader_parameter/fresnel = Color(0, 0, 0, 0)
 shader_parameter/uv_scale = Vector2(1, 1)
 shader_parameter/uv_offset = Vector2(0, 0)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_cqt46"]
 lightmap_size_hint = Vector2i(502, 502)
 material = SubResource("ShaderMaterial_1tfdu")
-size = Vector2(100, 100)
+size = Vector2(250, 250)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yxuxk"]
-size = Vector3(100, 0.25, 100)
+size = Vector3(250, 0.25, 250)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ohh07"]
 render_priority = 0
@@ -171,81 +141,18 @@ _data = {
 environment = ExtResource("1_vwniu")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.728549, -0.514705, -0.45199, -0.290061, -0.365955, 0.884274, -0.620549, 0.775342, 0.11732, 7.37758, 4.44366, 0)
-light_color = Color(0.921569, 0.921569, 0.921569, 1)
-light_energy = 0.2
-light_volumetric_fog_energy = 0.5
+transform = Transform3D(0.00389385, -0.9607, 0.277563, -0.49121, 0.239932, 0.837344, -0.871033, -0.139602, -0.470971, 7.37758, 4.44366, 0)
+light_color = Color(0.980392, 0.94902, 1, 1)
+light_energy = 0.55
 shadow_enabled = true
 directional_shadow_mode = 1
 sky_mode = 1
 
-[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("player")]
-transform = Transform3D(-1, -1.51808e-08, 8.60946e-08, 0, 0.984808, 0.173648, -8.74228e-08, 0.173648, -0.984808, 0.145459, 2.9332, -11.2039)
-environment = ExtResource("1_vwniu")
-current = true
-script = ExtResource("1_texlf")
-player = NodePath("../VehicleBody3D")
-
-[node name="VehicleBody3D" type="VehicleBody3D" parent="." node_paths=PackedStringArray("chromatic_player")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.143358, 0.249552, -8.73577)
-mass = 15.0
-gravity_scale = 0.5
-linear_velocity = Vector3(0, 0, -2)
-constant_force = Vector3(0, 0, 0.2)
-script = ExtResource("1_hjjij")
-chromatic_player = NodePath("../ColorRect/AnimationPlayer")
-metadata/_edit_group_ = true
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleBody3D"]
-transform = Transform3D(1, 0, 0, 2.32831e-10, 1, 0, 8.14907e-10, -2.98023e-08, 1, 0, 0, 0)
-mesh = SubResource("BoxMesh_3vp2l")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleBody3D"]
-shape = SubResource("BoxShape3D_wjaso")
-
-[node name="VehicleWheel3D" type="VehicleWheel3D" parent="VehicleBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.844253, 0, -0.70785)
-wheel_radius = 0.25
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleBody3D/VehicleWheel3D"]
-transform = Transform3D(-4.38304e-08, -1, 0, 1, -4.37722e-08, 0, -2.98023e-08, -4.65661e-10, 1, -0.00996697, 0.000224352, 0.0658298)
-mesh = SubResource("CylinderMesh_gdy0b")
-
-[node name="VehicleWheel3D2" type="VehicleWheel3D" parent="VehicleBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.82988, 0, -0.70785)
-wheel_radius = 0.25
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="VehicleBody3D/VehicleWheel3D2"]
-transform = Transform3D(-4.35393e-08, -1, 0, 1, -4.4005e-08, 0, -2.98023e-08, -8.14907e-10, 1, 0.053189, 0.00164413, 0.0680313)
-mesh = SubResource("CylinderMesh_gdy0b")
-skeleton = NodePath("../../VehicleWheel3D")
-
-[node name="VehicleWheel3D3" type="VehicleWheel3D" parent="VehicleBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.82988, 0, 0.614817)
-use_as_steering = true
-wheel_radius = 0.25
-
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="VehicleBody3D/VehicleWheel3D3"]
-transform = Transform3D(-4.33647e-08, -1, 0, 1, -4.4005e-08, 0, -2.98023e-08, -8.14907e-10, 1, 0.053189, 0.00164425, 0.0513536)
-mesh = SubResource("CylinderMesh_gdy0b")
-skeleton = NodePath("../../VehicleWheel3D")
-
-[node name="VehicleWheel3D4" type="VehicleWheel3D" parent="VehicleBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.877629, 0, 0.614817)
-use_as_steering = true
-wheel_radius = 0.25
-
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="VehicleBody3D/VehicleWheel3D4"]
-transform = Transform3D(-4.31901e-08, -1, 0, 1, -4.4005e-08, 0, -2.98023e-08, -8.14907e-10, 1, 0.0110615, 0.00164425, 0.0513537)
-mesh = SubResource("CylinderMesh_gdy0b")
-skeleton = NodePath("../../VehicleWheel3D")
-
-[node name="Marker3D" type="Marker3D" parent="VehicleBody3D"]
-transform = Transform3D(-1, -1.51808e-08, 8.60946e-08, 0, 0.984808, 0.173648, -8.74228e-08, 0.173648, -0.984808, 0, 1.27614, -3.25)
+[node name="Player" parent="." instance=ExtResource("6_2d0rm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.125, 0)
 
 [node name="Floor" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-constant_linear_velocity = Vector3(0, 0, -2)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
@@ -263,6 +170,18 @@ use_collision = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.41008, 0.460947, -2.74418)
 size = Vector3(1, 1, 5.45554)
 
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.843232, 0, -0.53755, 0, 1, 0, 0.53755, 0, 0.843232, -7.07135, 0.460947, 11.6106)
+size = Vector3(5.89986, 14.5808, 5.45554)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.843232, 0, -0.53755, 0, 1, 0, 0.53755, 0, 0.843232, 10.0195, 2.40873, 33.1578)
+size = Vector3(5.89986, 14.5808, 5.45554)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.843232, 0, -0.53755, 0, 1, 0, 0.53755, 0, 0.843232, -14.992, 2.40873, 93.8965)
+size = Vector3(5.89986, 14.5808, 5.45554)
+
 [node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.93131, -0.192057, 2.37874)
 size = Vector3(1, 1, 5.45554)
@@ -278,6 +197,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ColorRect"]
 libraries = {

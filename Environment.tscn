@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://ivd0yejx4l3w"]
+
+[ext_resource type="Environment" uid="uid://cg6eea4tudysu" path="res://Environment.tres" id="1_6x37c"]
+
+[node name="Environment" type="Node"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("1_6x37c")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.728549, -0.514705, -0.45199, -0.290061, -0.365955, 0.884274, -0.620549, 0.775342, 0.11732, 7.37758, 4.44366, 0)
+light_color = Color(0.921569, 0.921569, 0.921569, 1)
+light_energy = 0.2
+light_volumetric_fog_energy = 0.5
+shadow_enabled = true
+directional_shadow_mode = 1
+sky_mode = 1

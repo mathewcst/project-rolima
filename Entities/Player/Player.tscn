@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://cgxnyfb0ecwak"]
+
+[ext_resource type="Script" path="res://Entities/Player/Player_FP.gd" id="1_4qem1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ewdj8"]
+diffuse_mode = 3
+specular_mode = 1
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_uhnlb"]
+material = SubResource("StandardMaterial3D_ewdj8")
+
+[sub_resource type="BoxMesh" id="BoxMesh_d1ius"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tk38i"]
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_4qem1")
+metadata/_edit_group_ = true
+
+[node name="Body" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_uhnlb")
+
+[node name="Head" type="Node3D" parent="Body"]
+transform = Transform3D(0.637937, 0, 0, 0, 0.356759, 0, 0, 0, 0.515615, 0, 0.517356, -0.305611)
+
+[node name="Camera3D" type="Camera3D" parent="Body/Head"]
+transform = Transform3D(1.56755, 0, 0, 0, 2.80301, 0, 0, 0, 1.93943, 0, 0, 0.3)
+current = true
+
+[node name="Arm" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(0.158334, 0, 0, 0, 0.202377, 0, 0, 0, 1.07331, 0.302178, 0.116518, -0.385709)
+mesh = SubResource("BoxMesh_d1ius")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_tk38i")
