@@ -1,0 +1,39 @@
+[gd_resource type="Environment" load_steps=4 format=3 uid="uid://cg6eea4tudysu"]
+
+[ext_resource type="Shader" path="res://Shaders/sky.gdshader" id="1_swcq5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gogg4"]
+shader = ExtResource("1_swcq5")
+shader_parameter/color_top = Color(0.345098, 0.627451, 0.8, 1)
+shader_parameter/color_horizon = Color(0.458824, 0.635294, 0.882353, 1)
+shader_parameter/color_bottom = Color(1, 0.74, 0.39, 1)
+shader_parameter/exponent_factor_top = 1.0
+shader_parameter/exponent_factor_bottom = 1.0
+shader_parameter/intensity_amp = 1.0
+
+[sub_resource type="Sky" id="Sky_f32l5"]
+sky_material = SubResource("ShaderMaterial_gogg4")
+
+[resource]
+background_mode = 2
+background_color = Color(0.654902, 0.847059, 0.929412, 1)
+background_energy_multiplier = 0.75
+sky = SubResource("Sky_f32l5")
+ambient_light_source = 2
+ambient_light_color = Color(0.784314, 0.784314, 0.784314, 1)
+ambient_light_energy = 1.25
+reflected_light_source = 2
+tonemap_mode = 3
+tonemap_exposure = 0.95
+tonemap_white = 0.75
+ssao_enabled = true
+ssil_enabled = true
+glow_enabled = true
+glow_intensity = 0.15
+glow_bloom = 0.15
+volumetric_fog_density = 0.025
+volumetric_fog_emission = Color(0.333333, 0.486275, 0.662745, 1)
+volumetric_fog_emission_energy = 0.78
+adjustment_enabled = true
+adjustment_contrast = 1.15
+adjustment_saturation = 0.9

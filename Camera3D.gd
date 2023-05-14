@@ -6,6 +6,6 @@ func _ready() -> void:
 	assert(player, 'Missing player')
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	global_position = player.get_node('Marker3D').global_position
 	global_rotation = player.get_node('Marker3D').global_rotation

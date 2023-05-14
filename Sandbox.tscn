@@ -1,40 +1,13 @@
-[gd_scene load_steps=21 format=3 uid="uid://bfg5w5f0f5tti"]
+[gd_scene load_steps=24 format=3 uid="uid://bfg5w5f0f5tti"]
 
 [ext_resource type="Script" path="res://VehicleBody3D.gd" id="1_hjjij"]
 [ext_resource type="Script" path="res://Camera3D.gd" id="1_texlf"]
+[ext_resource type="Environment" uid="uid://cg6eea4tudysu" path="res://Environment.tres" id="1_vwniu"]
 [ext_resource type="Shader" path="res://Shaders/outline.gdshader" id="2_46eo6"]
 [ext_resource type="Material" uid="uid://nkb67a1iyphd" path="res://Materials/M_Base.tres" id="2_pv3l8"]
 [ext_resource type="Shader" path="res://Shaders/cel-shader-base.gdshader" id="3_0r784"]
 [ext_resource type="Shader" path="res://Shaders/outline_white.gdshader" id="3_pfaal"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ouib0"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-
-[sub_resource type="Sky" id="Sky_4pyl8"]
-sky_material = SubResource("ProceduralSkyMaterial_ouib0")
-
-[sub_resource type="Environment" id="Environment_xfw2c"]
-background_mode = 1
-background_color = Color(0.137255, 0.137255, 0.137255, 1)
-sky = SubResource("Sky_4pyl8")
-ambient_light_source = 2
-ambient_light_color = Color(0.890196, 0.890196, 0.890196, 1)
-ambient_light_energy = 1.5
-reflected_light_source = 1
-tonemap_mode = 3
-tonemap_exposure = 0.95
-tonemap_white = 0.75
-ssao_enabled = true
-glow_enabled = true
-glow_intensity = 0.15
-glow_bloom = 0.15
-volumetric_fog_enabled = true
-volumetric_fog_density = 0.015
-volumetric_fog_emission = Color(0.368627, 0.309804, 0.247059, 1)
-adjustment_enabled = true
-adjustment_contrast = 1.15
-adjustment_saturation = 1.15
+[ext_resource type="Shader" path="res://Shaders/chromatic_aberration.gdshader" id="7_u5i2n"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_3vp2l"]
 material = ExtResource("2_pv3l8")
@@ -64,19 +37,19 @@ top_radius = 0.25
 bottom_radius = 0.25
 height = 0.15
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_k0wm1"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1tfdu"]
 render_priority = 0
-next_pass = SubResource("ShaderMaterial_6m2dx")
 shader = ExtResource("3_0r784")
-shader_parameter/backlight = null
-shader_parameter/color = Color(0.52549, 0.258824, 0.0823529, 1)
+shader_parameter/backlight = Color(1, 1, 1, 1)
+shader_parameter/color = Color(0.52549, 0.380392, 0.172549, 1)
 shader_parameter/specular = Color(0.301961, 0.301961, 0.301961, 0)
 shader_parameter/fresnel = Color(0.2, 0.2, 0.2, 0)
 shader_parameter/uv_scale = Vector2(1, 1)
 shader_parameter/uv_offset = Vector2(0, 0)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_cqt46"]
-material = SubResource("ShaderMaterial_k0wm1")
+lightmap_size_hint = Vector2i(502, 502)
+material = SubResource("ShaderMaterial_1tfdu")
 size = Vector2(100, 100)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yxuxk"]
@@ -102,33 +75,125 @@ shader_parameter/fresnel = Color(0.2, 0.2, 0.2, 0.3)
 shader_parameter/uv_scale = Vector2(1, 1)
 shader_parameter/uv_offset = Vector2(0, 0)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y714m"]
+shader = ExtResource("7_u5i2n")
+shader_parameter/r_displacement = Vector2(0, 0)
+shader_parameter/g_displacement = Vector2(0, 0)
+shader_parameter/b_displacement = Vector2(0, 0)
+
+[sub_resource type="Animation" id="Animation_uqkrd"]
+resource_name = "JITTER"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/r_displacement")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(-2, -2, -2),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(4, 0), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/g_displacement")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(-2, -2, -2),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -3), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:material:shader_parameter/b_displacement")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(-2, -2, -2),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-3, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_sgm0m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/r_displacement")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/g_displacement")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:material:shader_parameter/b_displacement")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qo2ed"]
+_data = {
+"JITTER": SubResource("Animation_uqkrd"),
+"RESET": SubResource("Animation_sgm0m")
+}
+
 [node name="World" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_xfw2c")
+environment = ExtResource("1_vwniu")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.222, -0.72068, -0.656762, 0.0220222, -0.677104, 0.735558, -0.974798, 0.14883, 0.166188, 7.37758, 4.44366, 0)
-light_energy = 0.25
-light_indirect_energy = 0.0
-light_volumetric_fog_energy = 0.0
+transform = Transform3D(-0.728549, -0.514705, -0.45199, -0.290061, -0.365955, 0.884274, -0.620549, 0.775342, 0.11732, 7.37758, 4.44366, 0)
+light_color = Color(0.921569, 0.921569, 0.921569, 1)
+light_energy = 0.2
+light_volumetric_fog_energy = 0.5
 shadow_enabled = true
 directional_shadow_mode = 1
 sky_mode = 1
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("player")]
-transform = Transform3D(-1, -0.000316918, -0.000273755, -0.000417172, 0.811125, 0.584872, 3.66931e-05, 0.584872, -0.811125, 0.145459, 5.5891, -11.2039)
+transform = Transform3D(-1, -1.51808e-08, 8.60946e-08, 0, 0.984808, 0.173648, -8.74228e-08, 0.173648, -0.984808, 0.145459, 2.9332, -11.2039)
+environment = ExtResource("1_vwniu")
 current = true
 script = ExtResource("1_texlf")
 player = NodePath("../VehicleBody3D")
 
-[node name="VehicleBody3D" type="VehicleBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.984756, -0.17394, 0, 0.17394, 0.984756, 0.143358, 2.19421, -8.73577)
+[node name="VehicleBody3D" type="VehicleBody3D" parent="." node_paths=PackedStringArray("chromatic_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.143358, 0.249552, -8.73577)
 mass = 15.0
 gravity_scale = 0.5
 linear_velocity = Vector3(0, 0, -2)
 constant_force = Vector3(0, 0, 0.2)
 script = ExtResource("1_hjjij")
+chromatic_player = NodePath("../ColorRect/AnimationPlayer")
 metadata/_edit_group_ = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleBody3D"]
@@ -176,13 +241,14 @@ mesh = SubResource("CylinderMesh_gdy0b")
 skeleton = NodePath("../../VehicleWheel3D")
 
 [node name="Marker3D" type="Marker3D" parent="VehicleBody3D"]
-transform = Transform3D(-1, -0.000316911, -0.000273766, -0.000417172, 0.811125, 0.584872, 3.67057e-05, 0.584872, -0.811125, 0, 2.6, -3.25)
+transform = Transform3D(-1, -1.51808e-08, 8.60946e-08, 0, 0.984808, 0.173648, -8.74228e-08, 0.173648, -0.984808, 0, 1.27614, -3.25)
 
 [node name="Floor" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.988931, -0.148379, 0, 0.148379, 0.988931, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 constant_linear_velocity = Vector3(0, 0, -2)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 mesh = SubResource("PlaneMesh_cqt46")
 skeleton = NodePath("../..")
 
@@ -194,13 +260,26 @@ material_override = SubResource("ShaderMaterial_ppcy0")
 use_collision = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 0.995031, -0.0995629, 0, 0.0995629, 0.995031, 4.41008, 0.460947, -2.74418)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.41008, 0.460947, -2.74418)
 size = Vector3(1, 1, 5.45554)
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 0.995031, -0.0995629, 0, 0.0995629, 0.995031, -4.93131, -0.192057, 2.37874)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.93131, -0.192057, 2.37874)
 size = Vector3(1, 1, 5.45554)
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 0.995031, -0.0995629, 0, 0.0995629, 0.995031, 7.67232, -1.46311, 12.4326)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.67232, -0.0199327, 12.4326)
 size = Vector3(1, 1, 5.45554)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_y714m")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ColorRect"]
+libraries = {
+"": SubResource("AnimationLibrary_qo2ed")
+}
